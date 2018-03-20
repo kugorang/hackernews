@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import './App.css';
+import PropTypes from 'prop-types';
 
 const DEFAULT_QUERY = 'redux';
 const DEFAULT_HPP = '100';
@@ -10,42 +11,6 @@ const PATH_SEARCH = '/search';
 const PARAM_SEARCH = 'query=';
 const PARAM_PAGE = 'page=';
 const PARAM_HPP = 'hitsPerPage=';
-
-// const list = [
-//   {
-//     title: 'React',
-//     url: 'https://reactjs.org',
-//     author: 'Jordan Walke',
-//     num_comments: 3,
-//     points: 4,
-//     objectID: 0,
-//   },
-//   {
-//     title: 'Redux',
-//     url: 'https://github.com/reactjs/redux',
-//     author: 'Dan Abramov, Andrew Clark',
-//     num_comments: 2,
-//     points: 5,
-//     objectID: 1,
-//   },
-//   {
-//     title: '김현우',
-//     url: 'https://github.com/kugorang',
-//     author: 'Kim Hyeonwoo',
-//     num_comments: 1,
-//     points: 1,
-//     objectID: 2,
-//   }
-// ];
-
-// function isSearched(searchTerm) {
-//   return function (item) {
-//     return item.title.toLowerCase().includes(searchTerm.toLowerCase());
-//   }
-// }
-
-// const isSearched = searchTerm => item =>
-//   item.title.toLowerCase().includes(searchTerm.toLowerCase());
 
 const largeColumn = {
   width: '40%',
@@ -66,8 +31,6 @@ class App extends Component {
     super(props);
 
     this.state = {
-      // list,
-      // searchTerm: '',
       results: null,
       searchKey: '',
       searchTerm: DEFAULT_QUERY,
@@ -120,11 +83,6 @@ class App extends Component {
 
     this.setState({ searchKey: searchTerm });
     this.fetchSearchTopStories(searchTerm);
-
-    // fetch(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}`)
-    //   .then(response => response.json())
-    //   .then(result => this.setSearchTopStories(result))
-    //   .catch(error => error);
   }
 
   componentWillUnmount() {
@@ -149,7 +107,6 @@ class App extends Component {
   onDismiss(id) {
     // onClick 핸들러 안에 인라인으로 함수를 작성할 수 있으나,
     // 코드 가독성이 떨어짐
-    // const updateList = this.state.list.filter(item => item.objectID !== id);
 
     const { searchKey, results } = this.state;
     const { hits, page } = results[searchKey];
@@ -221,37 +178,6 @@ class App extends Component {
   }
 }
 
-// class Search extends Component {
-//   render() {
-//     const { value, onChange, children } = this.props;
-
-//     return (
-//       <form>
-//         {children} <input
-//           type="text"
-//           value={value}
-//           onChange={onChange}
-//         />
-//       </form>
-//     )
-//   }
-// }
-
-// const Search = ({ value, onChange, children }) => {
-
-//   // 해야할 일
-
-//   return (
-//     <form>
-//       {children} <input
-//         type="text"
-//         value={value}
-//         onChange={onChange}
-//       />
-//     </form>
-//   );
-// }
-
 const Search = ({
   value,
   onChange,
@@ -268,32 +194,6 @@ const Search = ({
       {children}
     </button>
   </form>
-
-// class Table extends Component {
-//   render() {
-//     const { list, pattern, onDismiss } = this.props;
-
-//     return (
-//       <div>
-//         {list.filter(isSearched(pattern)).map(item =>
-//           <div key={item.objectID}>
-//             <span>
-//               <a href={item.url}>{item.title}</a>
-//             </span>
-//             <span>{item.author}</span>
-//             <span>{item.num_comments}</span>
-//             <span>{item.points}</span>
-//             <span>
-//               <Button onClick={() => onDismiss(item.objectID)}>
-//                 Dismiss
-//               </Button>
-//             </span>
-//           </div>
-//         )}
-//       </div>
-//     );
-//   }
-// }
 
 const Table = ({ list, onDismiss }) =>
   <div className="table">
@@ -323,24 +223,48 @@ const Table = ({ list, onDismiss }) =>
     )}
   </div>
 
-class Button extends Component {
-  render() {
-    const {
-      onClick,
-      className = '',
-      children,
-    } = this.props;
+const Button = ({
+  onClick,
+  className = '',
+  children,
+}) =>
+  <button
+    onClick={onClick}
+    className={className}
+    type="button"
+  >
+    {children}
+  </button>
 
-    return (
-      <button
-        onClick={onClick}
-        className={className}
-        type="button"
-      >
-        {children}
-      </button>
-    );
-  }
-}
+// Table.propTypes = {
+//   list: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       objectID: PropTypes.string.isRequired,
+//       author: PropTypes.string,
+//       url: PropTypes.string,
+//       num_comments: PropTypes.number,
+//       points: PropTypes.number,
+//     })
+//   ).isRequired,
+//   onDismiss: PropTypes.func.isRequired,
+// };
+
+// Button.propTypes = {
+//   onClick: PropTypes.func.isRequired,
+//   className: PropTypes.string,
+//   children: PropTypes.node.isRequired,
+// };
+
+// Button.defaultProps = {
+//   onClick: '',
+//   className: '',
+//   children: '',
+// };
+
+export {
+  Button,
+  Search,
+  Table,
+};
 
 export default App;

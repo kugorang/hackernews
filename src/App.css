@@ -24,7 +24,7 @@
   font-size: 16px;
 }
 
-.talbe-row{
+.table-row{
   display: flex;
   line-height: 24px;
   white-space: nowrap;
@@ -40,7 +40,7 @@
   padding: 0 5px;
 }
 
-.talbe-row > span {
+.table-row > span {
   overflow: hidden;
   text-overflow: ellipsis;
   padding: 0 5px;
